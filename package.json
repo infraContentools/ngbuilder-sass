@@ -1,0 +1,30 @@
+{
+	"name": "ngbuilder-sass",
+	"version": "0.0.0",
+	"description": "ngbuilder - SASS compilation plugin",
+	"main": "sass.js",
+	"dependencies": {
+		"gulp": "~3.6.2",
+		"gulp-sass": "^0.7.3",
+		"gulp-concat": "~2.2.0",
+		"multipipe": "^0.1.1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/darlanalves/ngbuilder-sass"
+	},
+	"keywords": [
+		"angularjs",
+		"gulp",
+		"ngbuilder"
+	],
+	"author": {
+		"name": "Darlan Alves",
+		"email": "me@darlanalv.es"
+	},
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/darlanalves/ngbuilder-sass/issues"
+	},
+	"homepage": "https://github.com/darlanalves/ngbuilder-sass"
+}
