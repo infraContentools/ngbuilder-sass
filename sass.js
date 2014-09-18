@@ -31,13 +31,8 @@ module.exports = (function() {
 		var modulePath = context.modulePath,
 			moduleName = context.moduleName;
 
-		var pipe = multipipe(
-			gulp.src(path.join(modulePath, 'scss/**/*.scss')),
-			sass(sassOptions),
-			concat('module.css')
-		);
+		var includePaths = context.sassPaths ? Array.prototype.slice.call(context.sassPaths) : [];
 
-		var includePaths = context.sassPaths || [];
 
 		if (typeof includePaths === 'string') {
 			includePaths = [includePaths];
@@ -47,13 +42,23 @@ module.exports = (function() {
 
 		var sassOptions = {
 			outputStyle: 'compressed',
-			errLogToConsole: true,
 			includePaths: includePaths
 		};
 
-		pipe.on('error', next);
-		pipe.on('end', next);
-		pipe.on('finish', next);
+		var pipe = multipipe(
+			gulp.src(path.join(modulePath, 'scss/**/*.scss')),
+			sass(sassOptions),
+			concat('module.css')
+		);
+
+		function detach(err) {
+			pipe.removeAllListeners();
+			next(err);
+		}
+
+		pipe.once('error', detach);
+		pipe.once('end', detach);
+		pipe.once('finish', detach);
 
 		pipe.pipe(gulp.dest(modulePath));
 	}
