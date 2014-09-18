@@ -1,6 +1,6 @@
 {
   "name": "ngbuilder-sass",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "ngbuilder - SASS compilation plugin",
   "main": "sass.js",
   "dependencies": {
