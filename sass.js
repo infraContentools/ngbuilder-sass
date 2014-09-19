@@ -60,7 +60,6 @@ module.exports = (function() {
 
 		pipe.once('error', detach);
 		pipe.once('end', detach);
-		pipe.once('finish', detach);
 
 		pipe.pipe(gulp.dest(context.public));
 	}
