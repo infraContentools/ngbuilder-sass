@@ -7,7 +7,8 @@
     "gulp": "~3.6.2",
     "gulp-sass": "^0.7.3",
     "gulp-concat": "~2.2.0",
-    "multipipe": "^0.1.1"
+    "multipipe": "^0.1.1",
+    "gulp-cssmin": "^0.1.6"
   },
   "repository": {
     "type": "git",
