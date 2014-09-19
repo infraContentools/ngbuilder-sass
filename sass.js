@@ -7,12 +7,12 @@
  */
 
 module.exports = (function() {
-	var cssmin, gulp, sass, concat, multipipe, path, _initialized;
+	var cssmin, vinyl, sass, concat, multipipe, path, _initialized;
 
 	function init() {
 		if (_initialized) return;
 
-		gulp = require('gulp');
+		vinyl = require('vinyl-fs');
 		sass = require('gulp-sass');
 		cssmin = require('gulp-cssmin');
 		concat = require('gulp-concat');
@@ -47,7 +47,7 @@ module.exports = (function() {
 		};
 
 		var pipe = multipipe(
-			gulp.src(path.join(modulePath, 'scss/**/*.scss')),
+			vinyl.src(path.join(modulePath, 'scss/**/*.scss')),
 			sass(sassOptions),
 			concat(context.moduleName + '.css'),
 			cssmin()
@@ -61,7 +61,7 @@ module.exports = (function() {
 		pipe.once('error', detach);
 		pipe.once('end', detach);
 
-		pipe.pipe(gulp.dest(context.public));
+		pipe.pipe(vinyl.dest(context.public));
 	}
 
 	return {
