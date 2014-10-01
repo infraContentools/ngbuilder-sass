@@ -7,7 +7,7 @@
  */
 
 module.exports = (function() {
-	var cssmin, vinyl, sass, concat, multipipe, path, _initialized;
+	var _initialized, cssmin, vinyl, sass, concat, multipipe, nodePath = require('path');
 
 	function init() {
 		if (_initialized) return;
@@ -17,7 +17,6 @@ module.exports = (function() {
 		cssmin = require('gulp-cssmin');
 		concat = require('gulp-concat');
 		multipipe = require('multipipe');
-		path = require('path');
 
 		_initialized = true;
 	}
@@ -39,7 +38,7 @@ module.exports = (function() {
 			includePaths = [includePaths];
 		}
 
-		includePaths.push(path.join(modulePath, 'scss'));
+		includePaths.push(nodePath.join(modulePath, 'scss'));
 
 		var sassOptions = {
 			outputStyle: 'compressed',
@@ -47,7 +46,7 @@ module.exports = (function() {
 		};
 
 		var pipe = multipipe(
-			vinyl.src(path.join(modulePath, 'scss/**/*.scss')),
+			vinyl.src(nodePath.join(modulePath, 'scss/**/*.scss')),
 			sass(sassOptions),
 			concat(context.moduleName + '.css'),
 			cssmin()
@@ -64,9 +63,28 @@ module.exports = (function() {
 		pipe.pipe(vinyl.dest(context.public));
 	}
 
+	function watcher(context) {
+		var base = [nodePath.join(context.modulePath, 'scss/**/*.scss')],
+			includePaths = context.sassPaths;
+
+		if (!includePaths) {
+			return base;
+		}
+
+		if (typeof includePaths === 'string') {
+			includePaths = [includePaths];
+		}
+
+		includePaths = includePaths.map(function(path) {
+			return nodePath.join(path, '**/*.scss');
+		});
+
+		return base.concat(includePaths);
+	}
+
 	return {
 		name: 'sass',
-		watcher: 'scss/**/*.scss',
+		watcher: watcher,
 		run: run
 	};
 })();
