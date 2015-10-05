@@ -4,7 +4,7 @@
   "description": "ngbuilder - SASS compilation plugin",
   "main": "sass.js",
   "dependencies": {
-    "gulp-sass": "^0.7.3",
+    "gulp-sass": "^2.0.4",
     "gulp-concat": "~2.2.0",
     "multipipe": "^0.1.1",
     "gulp-cssmin": "^0.1.6",
